@@ -1,12 +1,15 @@
-import { Ionicons } from "@expo/vector-icons";
+// * React Navigation Bottom Tabs
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Ionicons } from "@expo/vector-icons";
+import { View } from "react-native";
+
+// * Pages
 import Home from "./home";
-import { View, Text } from "react-native";
 
 const Tab = createBottomTabNavigator();
 
-export default function Tabs() {
-  function tab(nome: string, componente: any, label: string, icone: string) {
+const Tabs = () => {
+  const tab = (nome: string, componente: any, icone: string) => {
     return (
       <Tab.Screen
         name={nome}
@@ -17,22 +20,15 @@ export default function Tabs() {
             <View className="items-center">
               <Ionicons
                 name={icone as any}
-                size={22}
-                color={focused ? "#FFF" : "#CCC"}
+                size={28}
+                color={focused ? "#F7924A" : "#464646"}
               />
-              <Text
-                className={`text-sm ${
-                  focused ? "text-white" : "text-gray-300"
-                }`}
-              >
-                {label}
-              </Text>
             </View>
           ),
         }}
       />
     );
-  }
+  };
 
   return (
     <Tab.Navigator
@@ -40,17 +36,21 @@ export default function Tabs() {
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
-        tabBarActiveBackgroundColor: "#7811F5",
-        tabBarInactiveBackgroundColor: "#7811F5",
         tabBarStyle: {
-          backgroundColor: "#7811F5",
+          backgroundColor: "#FFFFFF",
+          paddingVertical: 6,
+          borderTopWidth: 0,
+          elevation: 0,
+          shadowOpacity: 0,
         },
       }}
     >
-      {tab("Inicio", Home, "Início", "home-outline")}
-      {tab("Favoritos", Home, "Favoritos", "heart-outline")}
-      {tab("Chat", Home, "Chat", "chatbubble-outline")}
-      {tab("Perfil", Home, "Perfil", "person-outline")}
+      {tab("Inicio", Home, "home")}
+      {tab("Favoritos", Home, "heart")}
+      {tab("Chat", Home, "chatbubble")}
+      {tab("Perfil", Home, "person")}
     </Tab.Navigator>
   );
-}
+};
+
+export default Tabs;
