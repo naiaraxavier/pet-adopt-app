@@ -3,12 +3,12 @@ import { Text, TextInput } from "react-native";
 
 // * Interface
 interface InputFieldProps {
-  value: string;
-  error?: string;
-  placeholder: string;
-  secureTextEntry?: boolean;
   onChangeText: (text: string) => void;
+  secureTextEntry?: boolean;
+  placeholder: string;
   onBlur?: () => void;
+  error?: string;
+  value: string;
   keyboardType?:
     | "default"
     | "email-address"

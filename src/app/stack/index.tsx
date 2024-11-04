@@ -1,4 +1,3 @@
-import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer, DarkTheme } from "@react-navigation/native";
 import Toast from "react-native-toast-message";
@@ -9,7 +8,7 @@ import Home from "./home";
 
 const Stack = createNativeStackNavigator();
 
-export default function App() {
+const App = () => {
   return (
     <NavigationContainer theme={DarkTheme}>
       <Stack.Navigator initialRouteName="Login">
@@ -39,4 +38,6 @@ export default function App() {
       <Toast />
     </NavigationContainer>
   );
-}
+};
+
+export default App;

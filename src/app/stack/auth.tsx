@@ -24,25 +24,15 @@ import Toast from "react-native-toast-message";
 import { InputField } from "@/src/components/form/inputField";
 
 // * Form
-import * as Yup from "yup";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { validationSchemaAuth } from "@/src/data/validation/schemas";
 
 // * Interface
 interface AuthFormValues {
   email: string;
   password: string;
 }
-
-// Validation with Yup
-const validationSchema = Yup.object().shape({
-  email: Yup.string()
-    .email("Por favor, insira um e-mail válido.")
-    .required("E-mail é obrigatório."),
-  password: Yup.string()
-    .min(6, "A senha deve ter pelo menos 6 caracteres.")
-    .required("Senha é obrigatória."),
-});
 
 const Auth = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -56,7 +46,7 @@ const Auth = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<AuthFormValues>({
-    resolver: yupResolver(validationSchema),
+    resolver: yupResolver(validationSchemaAuth),
   });
 
   const onSubmit = async (data: AuthFormValues) => {
