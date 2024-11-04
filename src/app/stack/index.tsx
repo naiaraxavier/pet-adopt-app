@@ -9,8 +9,8 @@ import { getSessionToken } from "@/src/data/helpers/storage";
 import { useEffect, useState } from "react";
 
 // * Components
-import { Text } from "react-native";
 import Toast from "react-native-toast-message";
+import Loading from "../../components/loading";
 
 // * Nativewind
 import "../../../global.css";
@@ -35,7 +35,7 @@ const App = () => {
   }, []);
 
   if (isAuthenticated === null) {
-    return <Text>Loading...</Text>;
+    return <Loading />;
   }
 
   return (
