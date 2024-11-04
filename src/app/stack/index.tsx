@@ -1,18 +1,21 @@
+import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer, DarkTheme } from "@react-navigation/native";
+import Toast from "react-native-toast-message";
+import "../../../global.css";
 import Tabs from "../tabs";
-import Login from "./Login";
-import Home from "./Home";
+import Auth from "./auth";
+import Home from "./home";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={DarkTheme}>
       <Stack.Navigator initialRouteName="Login">
         <Stack.Screen
           name="Login"
-          component={Login}
+          component={Auth}
           options={{
             headerShown: false,
           }}
@@ -32,6 +35,8 @@ export default function App() {
           }}
         />
       </Stack.Navigator>
+
+      <Toast />
     </NavigationContainer>
   );
 }

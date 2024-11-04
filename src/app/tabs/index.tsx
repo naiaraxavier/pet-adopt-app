@@ -1,7 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StyleSheet, Text, View } from "react-native";
-import Home from "./Home";
+import Home from "./home";
 
 const Tab = createBottomTabNavigator();
 
