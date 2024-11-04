@@ -1,19 +1,48 @@
+// * React Navigation Stack
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer, DarkTheme } from "@react-navigation/native";
+
+// * Helpers
+import { getSessionToken } from "@/src/data/helpers/storage";
+
+// * React
+import { useEffect, useState } from "react";
+
+// * Components
+import { Text } from "react-native";
 import Toast from "react-native-toast-message";
+
+// * Nativewind
 import "../../../global.css";
+
+// * Pages
 import Tabs from "../tabs";
 import Auth from "./auth";
-import Home from "./home";
+// import Home from "./home";
 
 const Stack = createNativeStackNavigator();
 
 const App = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    const checkSessionToken = async () => {
+      const token = await getSessionToken();
+      setIsAuthenticated(!!token);
+    };
+
+    checkSessionToken();
+  }, []);
+
+  if (isAuthenticated === null) {
+    return <Text>Loading...</Text>;
+  }
+
   return (
     <NavigationContainer theme={DarkTheme}>
-      <Stack.Navigator initialRouteName="Login">
+      <Stack.Navigator initialRouteName={isAuthenticated ? "Tabs" : "Auth"}>
         <Stack.Screen
-          name="Login"
+          name="Auth"
           component={Auth}
           options={{
             headerShown: false,
@@ -26,13 +55,13 @@ const App = () => {
             headerShown: false,
           }}
         />
-        <Stack.Screen
+        {/* <Stack.Screen
           name="Home"
           component={Home}
           options={{
             headerShown: false,
           }}
-        />
+        /> */}
       </Stack.Navigator>
 
       <Toast />

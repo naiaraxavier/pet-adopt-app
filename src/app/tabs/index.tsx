@@ -1,7 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { StyleSheet, Text, View } from "react-native";
 import Home from "./home";
+import { View, Text } from "react-native";
 
 const Tab = createBottomTabNavigator();
 
@@ -14,17 +14,16 @@ export default function Tabs() {
         options={{
           unmountOnBlur: true,
           tabBarIcon: ({ focused }) => (
-            <View style={styles.tabScreen}>
+            <View className="items-center">
               <Ionicons
                 name={icone as any}
                 size={22}
                 color={focused ? "#FFF" : "#CCC"}
               />
               <Text
-                style={{
-                  ...styles.tabScreenText,
-                  color: focused ? "#FFF" : "#CCC",
-                }}
+                className={`text-sm ${
+                  focused ? "text-white" : "text-gray-300"
+                }`}
               >
                 {label}
               </Text>
@@ -37,7 +36,7 @@ export default function Tabs() {
 
   return (
     <Tab.Navigator
-      initialRouteName="Home"
+      initialRouteName="Inicio"
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
@@ -49,15 +48,9 @@ export default function Tabs() {
       }}
     >
       {tab("Inicio", Home, "Início", "home-outline")}
+      {tab("Favoritos", Home, "Favoritos", "heart-outline")}
+      {tab("Chat", Home, "Chat", "chatbubble-outline")}
+      {tab("Perfil", Home, "Perfil", "person-outline")}
     </Tab.Navigator>
   );
 }
-
-const styles = StyleSheet.create({
-  tabScreen: {
-    alignItems: "center",
-  },
-  tabScreenText: {
-    fontSize: 14,
-  },
-});

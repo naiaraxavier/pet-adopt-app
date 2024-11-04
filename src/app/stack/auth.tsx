@@ -27,6 +27,7 @@ import { InputField } from "@/src/components/form/inputField";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { validationSchemaAuth } from "@/src/data/validation/schemas";
+import { saveSessionToken } from "@/src/data/helpers/storage";
 
 // * Interface
 interface AuthFormValues {
@@ -37,7 +38,7 @@ interface AuthFormValues {
 const Auth = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [isLogin, setIsLogin] = useState<boolean>(true);
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
 
   const auth = FIREBASE_AUTH;
 
@@ -53,13 +54,20 @@ const Auth = () => {
     setLoading(true);
     try {
       if (isLogin) {
-        await signInWithEmailAndPassword(auth, data.email, data.password);
+        const userCredential = await signInWithEmailAndPassword(
+          auth,
+          data.email,
+          data.password
+        );
+        const token = await userCredential.user.getIdToken();
+
+        await saveSessionToken(token);
         Toast.show({
           text1: "Logado com sucesso!",
           type: "success",
         });
-
-        // navigate to home screen
+        // Navigate to home screen
+        navigation.navigate("Tabs");
       } else {
         await createUserWithEmailAndPassword(auth, data.email, data.password);
         Toast.show({

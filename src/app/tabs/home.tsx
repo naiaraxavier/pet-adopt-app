@@ -1,23 +1,13 @@
-import { StyleSheet, ScrollView, SafeAreaView, Text } from "react-native";
+import { ScrollView, SafeAreaView, Text } from "react-native";
 
-export default function Home({ navigation }: any) {
+export default function Home() {
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView className="flex-1 justify-center items-center bg-[#0E001D] w-full">
       <ScrollView
         contentContainerStyle={{ paddingVertical: 20, width: "100%" }}
       >
-        <Text>Home</Text>
+        <Text className="text-white">Home</Text>
       </ScrollView>
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#0E001D",
-    width: "100%",
-  },
-});
