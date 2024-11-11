@@ -1,52 +1,43 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Platform } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const STORAGE_KEY = "session-token";
+const STORAGE_KEY_TOKEN = "session-token";
+const STORAGE_KEY_EMAIL = "user-email";
 
-/**
- * Saves the session token to the appropriate storage.
- * @param token - The session token to save.
- */
-export const saveSessionToken = async (token: string) => {
+// Generic function to access appropriate storage (localStorage or AsyncStorage)
+const storage = Platform.OS === "web" ? localStorage : AsyncStorage;
+
+// Function to save the token and email
+export const saveSession = async (token: string, email: string) => {
   try {
-    if (Platform.OS === "web") {
-      localStorage.setItem(STORAGE_KEY, token);
-    } else {
-      await AsyncStorage.setItem(STORAGE_KEY, token);
-    }
+    await storage.setItem(STORAGE_KEY_TOKEN, token);
+    await storage.setItem(STORAGE_KEY_EMAIL, email);
   } catch (error) {
-    console.error("Erro ao salvar o token:", error);
+    console.error("Erro ao salvar o token e o e-mail:", error);
   }
 };
 
-/**
- * Retrieves the session token from the appropriate store.
- * @returns The session token, or null in case of error.
- */
-export const getSessionToken = async (): Promise<string | null> => {
+// Function to obtain the token and email
+export const getSession = async (): Promise<{
+  token: string | null;
+  email: string | null;
+}> => {
   try {
-    if (Platform.OS === "web") {
-      return localStorage.getItem(STORAGE_KEY);
-    } else {
-      return await AsyncStorage.getItem(STORAGE_KEY);
-    }
+    const token = await storage.getItem(STORAGE_KEY_TOKEN);
+    const email = await storage.getItem(STORAGE_KEY_EMAIL);
+    return { token, email };
   } catch (error) {
-    console.error("Erro ao buscar o token:", error);
-    return null;
+    console.error("Erro ao buscar o token e o e-mail:", error);
+    return { token: null, email: null };
   }
 };
 
-/**
- * Removes the session token from the appropriate store.
- */
-export const removeSessionToken = async () => {
+// Function to remove the token and email
+export const removeSession = async () => {
   try {
-    if (Platform.OS === "web") {
-      localStorage.removeItem(STORAGE_KEY);
-    } else {
-      await AsyncStorage.removeItem(STORAGE_KEY);
-    }
+    await storage.removeItem(STORAGE_KEY_TOKEN);
+    await storage.removeItem(STORAGE_KEY_EMAIL);
   } catch (error) {
-    console.error("Erro ao remover o token:", error);
+    console.error("Erro ao remover o token e o e-mail:", error);
   }
 };

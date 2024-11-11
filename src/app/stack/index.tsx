@@ -1,9 +1,10 @@
-// * React Navigation Stack
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { NavigationContainer, DarkTheme } from "@react-navigation/native";
+// * Pages
+import Tabs from "../tabs";
+import Auth from "./auth";
+// import Home from "./home";
 
-// * Helpers
-import { getSessionToken } from "@/src/data/helpers/storage";
+// * Nativewind
+import "../../../global.css";
 
 // * React
 import { useEffect, useState } from "react";
@@ -12,13 +13,12 @@ import { useEffect, useState } from "react";
 import Toast from "react-native-toast-message";
 import Loading from "../../components/loading";
 
-// * Nativewind
-import "../../../global.css";
+// * Helpers
+import { getSession } from "@/src/data/helpers/storage";
 
-// * Pages
-import Tabs from "../tabs";
-import Auth from "./auth";
-// import Home from "./home";
+// * React Navigation Stack
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { NavigationContainer, DarkTheme } from "@react-navigation/native";
 
 const Stack = createNativeStackNavigator();
 
@@ -26,12 +26,12 @@ const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
 
   useEffect(() => {
-    const checkSessionToken = async () => {
-      const token = await getSessionToken();
+    const checkSession = async () => {
+      const { token } = await getSession();
       setIsAuthenticated(!!token);
     };
 
-    checkSessionToken();
+    checkSession();
   }, []);
 
   if (isAuthenticated === null) {

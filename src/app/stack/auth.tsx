@@ -1,3 +1,6 @@
+// * React
+import { useState } from "react";
+
 // * React Native
 import {
   View,
@@ -8,9 +11,6 @@ import {
   SafeAreaView,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-
-// * React
-import { useState } from "react";
 
 // * Firebase
 import {
@@ -24,10 +24,10 @@ import Toast from "react-native-toast-message";
 import { InputField } from "@/src/components/form/inputField";
 
 // * Form
-import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm, Controller } from "react-hook-form";
+import { saveSession } from "@/src/data/helpers/storage";
 import { validationSchemaAuth } from "@/src/data/validation/schemas";
-import { saveSessionToken } from "@/src/data/helpers/storage";
 
 // * Interface
 interface AuthFormValues {
@@ -36,9 +36,9 @@ interface AuthFormValues {
 }
 
 const Auth = () => {
-  const [loading, setLoading] = useState<boolean>(false);
-  const [isLogin, setIsLogin] = useState<boolean>(true);
   const navigation = useNavigation<any>();
+  const [isLogin, setIsLogin] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const auth = FIREBASE_AUTH;
 
@@ -52,31 +52,37 @@ const Auth = () => {
 
   const onSubmit = async (data: AuthFormValues) => {
     setLoading(true);
+
     try {
       if (isLogin) {
-        const userCredential = await signInWithEmailAndPassword(
+        // Login
+        const { user } = await signInWithEmailAndPassword(
           auth,
           data.email,
           data.password
         );
-        const token = await userCredential.user.getIdToken();
+        const token = await user.getIdToken();
 
-        await saveSessionToken(token);
+        await saveSession(token, data.email);
+
         Toast.show({
           text1: "Logado com sucesso!",
           type: "success",
         });
-        // Navigate to home screen
+
         navigation.navigate("Tabs");
       } else {
+        // Create account
         await createUserWithEmailAndPassword(auth, data.email, data.password);
+
         Toast.show({
           text1: "Conta criada com sucesso!",
           type: "success",
         });
+
         setIsLogin(true);
       }
-    } catch {
+    } catch (error) {
       Toast.show({
         text1: "Email ou senha incorreta. Tente novamente.",
         type: "error",

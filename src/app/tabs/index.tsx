@@ -1,7 +1,7 @@
 // * React Navigation Bottom Tabs
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Ionicons } from "@expo/vector-icons";
 import { View } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 // * Pages
 import Home from "./home";
@@ -41,7 +41,6 @@ const Tabs = () => {
           paddingVertical: 6,
           borderTopWidth: 0,
           elevation: 0,
-          shadowOpacity: 0,
         },
       }}
     >
