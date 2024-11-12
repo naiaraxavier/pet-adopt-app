@@ -5,7 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 // * Pages
 import Home from './home';
-import Favorites from './favorites';
+import FavoritesPage from './favorites';
 
 const Tab = createBottomTabNavigator();
 
@@ -50,7 +50,7 @@ const Tabs = () => {
       }}
     >
       {tab('Inicio', Home, 'home')}
-      {tab('Favorites', Favorites, 'heart')}
+      {tab('Favorites', FavoritesPage, 'heart')}
       {tab('Chat', Home, 'chatbubble')}
       {tab('Perfil', Home, 'person')}
     </Tab.Navigator>

@@ -2,9 +2,9 @@
 import {
   Text,
   View,
+  ScrollView,
   SafeAreaView,
   TouchableOpacity,
-  ScrollView,
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
@@ -12,22 +12,19 @@ import { useNavigation } from '@react-navigation/native';
 // * Helpers
 import { getSession } from '@/src/data/helpers/storage';
 
+// * Data
+import pets from '@/src/data/pets-data/pets/pets.json';
+
 // * Components
 import Loading from '@/src/components/loading';
-import { CategoryButton } from '@/src/components/category';
-import { CarouselHome } from '@/src/components/carousel';
-
-// * Data
 import { PetCard } from '@/src/components/pert-card';
-
-import pets from '@/src/data/pets-data/pets/pets.json';
-import { getFavorites, handleFavorite } from '@/src/data/helpers/ultils';
+import { CarouselHome } from '@/src/components/carousel';
+import { CategoryButton } from '@/src/components/category';
 
 const Home = () => {
   const navigation = useNavigation<any>();
   const [loading, setLoading] = useState<boolean>(true);
   const [userEmail, setUserEmail] = useState<string>('');
-  const [favoritePets, setFavoritePets] = useState<number[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>('');
 
   const categories = ['Gatos', 'Cães', 'Pássaros', 'Peixes', 'Roedores'];
@@ -37,9 +34,6 @@ const Home = () => {
       const { email } = await getSession();
       setUserEmail(email ?? 'Usuário');
       setLoading(false);
-
-      const storedFavorites = await getFavorites();
-      setFavoritePets(storedFavorites);
     };
     fetchSessionData();
   }, []);
@@ -97,16 +91,13 @@ const Home = () => {
               <View className='flex-row gap-6'>
                 {pets.map((pet) => (
                   <PetCard
+                    id={pet.id}
                     key={pet.id}
                     name={pet.name}
                     image={pet.image}
                     location={pet.location}
                     isLost={pet.isLost}
                     isAdoption={pet.isAdoption}
-                    isFavorite={favoritePets.includes(pet.id)}
-                    onFavorite={() =>
-                      handleFavorite(pet.id, favoritePets, setFavoritePets)
-                    }
                   />
                 ))}
               </View>

@@ -1,59 +1,76 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, ScrollView } from 'react-native';
+'use client';
+
+// * React Native
+import React, { useState, useEffect } from 'react';
+import { View, Text, FlatList, SafeAreaView } from 'react-native';
+
+// * Local Storage
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+// * Data
 import pets from '@/src/data/pets-data/pets/pets.json';
-import { getFavorites, handleFavorite } from '@/src/data/helpers/ultils';
+
+// * Components
 import { PetCard } from '@/src/components/pert-card';
 
-const Favorites = () => {
-  const [favoritePets, setFavoritePets] = useState<any[]>([]);
+// * Interfaces
+interface IFavorites {
+  id: number;
+  age: number;
+  sex: string;
+  name: string;
+  image: string;
+  weight: string;
+  isLost: boolean;
+  category: string;
+  location: string;
+  description: string;
+  isAdoption: boolean;
+}
+
+const FavoritesPage = () => {
+  const [favoritePets, setFavoritePets] = useState<Array<IFavorites>>([]);
 
   useEffect(() => {
     const fetchFavorites = async () => {
-      const storedFavorites = await getFavorites();
-      const petsInFavorites = pets.filter((pet) =>
-        storedFavorites.includes(pet.id)
-      );
-      setFavoritePets(petsInFavorites);
+      try {
+        const favorites = await AsyncStorage.getItem('favorites');
+        if (favorites !== null) {
+          const favoritesArray = JSON.parse(favorites);
+          const favoritePetsData = pets.filter((pet) =>
+            favoritesArray.includes(pet.id)
+          );
+          setFavoritePets(favoritePetsData);
+        }
+      } catch (error) {
+        console.error('Error fetching favorites:', error);
+      }
     };
+
     fetchFavorites();
   }, []);
 
   return (
-    <View className='flex-1 bg-white'>
-      <View className='px-5 mt-10'>
-        <Text className='font-bold mb-6 mt-6 text-3xl'>Meus Favoritos</Text>
-
-        {favoritePets.length === 0 ? (
-          <Text className='text-center'>
-            Você ainda não favoritou nenhum pet.
-          </Text>
+    <SafeAreaView className='flex-1 bg-gray-100'>
+      <View className='p-4 mt-10'>
+        <Text className='text-2xl font-bold mb-5'>Meus Favoritos</Text>
+        {favoritePets.length > 0 ? (
+          <FlatList
+            data={favoritePets}
+            renderItem={({ item }) => <PetCard {...item} />}
+            keyExtractor={(item) => item.id.toString()}
+            numColumns={2}
+            columnWrapperStyle={{ justifyContent: 'space-between' }}
+            className='w-full'
+          />
         ) : (
-          <ScrollView>
-            <View className='flex-row gap-6'>
-              {favoritePets.map((pet) => (
-                <PetCard
-                  key={pet.id}
-                  name={pet.name}
-                  image={pet.image}
-                  location={pet.location}
-                  isLost={pet.isLost}
-                  isAdoption={pet.isAdoption}
-                  isFavorite={true}
-                  onFavorite={() =>
-                    handleFavorite(
-                      pet.id,
-                      favoritePets.map((p) => p.id),
-                      setFavoritePets
-                    )
-                  }
-                />
-              ))}
-            </View>
-          </ScrollView>
+          <Text className='text-center text-gray-500'>
+            Você ainda não tem pets favoritos.
+          </Text>
         )}
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
-export default Favorites;
+export default FavoritesPage;
