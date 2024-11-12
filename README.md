@@ -32,13 +32,13 @@ Além disso, é recomendável ter um editor para trabalhar com o código, como o
 1. **Clone o repositório**
 
 ```bash
-  git clone https://github.com/seu-usuario/adocao-animais-perdidos.git
+  git clone git@github.com:naiaraxavier/pet-adopt-app.git
 ```
 
 2. **Navegue até o diretório do projeto**
 
 ```bash
-  git clone https://github.com/seu-usuario/adocao-animais-perdidos.git
+  cd pet-adopt-app
 ```
 
 3. **Instale as dependências**
@@ -52,12 +52,12 @@ Além disso, é recomendável ter um editor para trabalhar com o código, como o
 Crie um projeto no Firebase e obtenha as credenciais. Depois, crie um arquivo .env na raiz do projeto e configure as variáveis do Firebase:
 
 ```plaintext
+FIREBASE_APP_ID=your-app-id
 FIREBASE_API_KEY=your-api-key
-FIREBASE_AUTH_DOMAIN=your-auth-domain
 FIREBASE_PROJECT_ID=your-project-id
+FIREBASE_AUTH_DOMAIN=your-auth-domain
 FIREBASE_STORAGE_BUCKET=your-storage-bucket
 FIREBASE_MESSAGING_SENDER_ID=your-messaging-sender-id
-FIREBASE_APP_ID=your-app-id
 ```
 
 ## 🏃 Executando o Projeto
