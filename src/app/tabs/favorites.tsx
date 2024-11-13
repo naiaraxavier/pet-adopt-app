@@ -4,14 +4,12 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, SafeAreaView } from 'react-native';
 
-// * Local Storage
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
 // * Data
 import pets from '@/src/data/pets-data/pets/pets.json';
 
 // * Components
 import { PetCard } from '@/src/components/pert-card';
+import { useFavorites } from '@/src/data/hooks/useFavorites';
 
 // * Interfaces
 interface IFavorites {
@@ -30,25 +28,14 @@ interface IFavorites {
 
 const FavoritesPage = () => {
   const [favoritePets, setFavoritePets] = useState<Array<IFavorites>>([]);
+  const { favorites } = useFavorites();
 
   useEffect(() => {
-    const fetchFavorites = async () => {
-      try {
-        const favorites = await AsyncStorage.getItem('favorites');
-        if (favorites !== null) {
-          const favoritesArray = JSON.parse(favorites);
-          const favoritePetsData = pets.filter((pet) =>
-            favoritesArray.includes(pet.id)
-          );
-          setFavoritePets(favoritePetsData);
-        }
-      } catch (error) {
-        console.error('Error fetching favorites:', error);
-      }
-    };
-
-    fetchFavorites();
-  }, []);
+    const favoritePetsData = pets.filter((pet) =>
+      favorites.includes(pet.id.toString())
+    );
+    setFavoritePets(favoritePetsData);
+  }, [favorites]);
 
   return (
     <SafeAreaView className='flex-1 bg-gray-100'>

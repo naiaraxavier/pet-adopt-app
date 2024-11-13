@@ -1,14 +1,13 @@
 'use client';
 
 // * React Native
-import React, { useState, useEffect } from 'react';
 import { View, Image, Text, TouchableOpacity } from 'react-native';
 
 // * Icons
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
 
-// * Local Storage
-import AsyncStorage from '@react-native-async-storage/async-storage';
+// * Hooks
+import { useFavorites } from '../data/hooks/useFavorites';
 
 interface PetCardProps {
   id: number;
@@ -27,42 +26,10 @@ export const PetCard = ({
   location,
   isAdoption,
 }: PetCardProps) => {
-  const [isFavorite, setIsFavorite] = useState(false);
-
-  useEffect(() => {
-    const checkFavoriteStatus = async () => {
-      try {
-        const favorites = await AsyncStorage.getItem('favorites');
-        if (favorites !== null) {
-          const favoritesArray = JSON.parse(favorites);
-          setIsFavorite(favoritesArray.includes(id));
-        }
-      } catch (error) {
-        console.error('Error checking favorite status:', error);
-      }
-    };
-
-    checkFavoriteStatus();
-  }, [id]);
+  const { isFavorite, toggleFavorite } = useFavorites();
 
   const handleFavoritePress = async () => {
-    try {
-      const favorites = await AsyncStorage.getItem('favorites');
-      let favoritesArray = favorites ? JSON.parse(favorites) : [];
-
-      if (isFavorite) {
-        favoritesArray = favoritesArray.filter(
-          (favId: string) => Number(favId) !== id
-        );
-      } else {
-        favoritesArray.push(id);
-      }
-
-      await AsyncStorage.setItem('favorites', JSON.stringify(favoritesArray));
-      setIsFavorite(!isFavorite);
-    } catch (error) {
-      console.error('Error updating favorites:', error);
-    }
+    toggleFavorite(id.toString());
   };
 
   return (
@@ -88,8 +55,8 @@ export const PetCard = ({
       >
         <FontAwesome
           size={20}
-          name={isFavorite ? 'heart' : 'heart-o'}
-          color={isFavorite ? 'red' : 'red'}
+          name={isFavorite(id.toString()) ? 'heart' : 'heart-o'}
+          color={isFavorite(id.toString()) ? 'red' : 'red'}
         />
       </TouchableOpacity>
 

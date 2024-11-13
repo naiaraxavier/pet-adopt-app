@@ -1,11 +1,12 @@
-import { Platform } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+// * React Native
+import { Platform } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const STORAGE_KEY_TOKEN = "session-token";
-const STORAGE_KEY_EMAIL = "user-email";
+const STORAGE_KEY_TOKEN = 'session-token';
+const STORAGE_KEY_EMAIL = 'user-email';
 
 // Generic function to access appropriate storage (localStorage or AsyncStorage)
-const storage = Platform.OS === "web" ? localStorage : AsyncStorage;
+const storage = Platform.OS === 'web' ? localStorage : AsyncStorage;
 
 // Function to save the token and email
 export const saveSession = async (token: string, email: string) => {
@@ -13,7 +14,7 @@ export const saveSession = async (token: string, email: string) => {
     await storage.setItem(STORAGE_KEY_TOKEN, token);
     await storage.setItem(STORAGE_KEY_EMAIL, email);
   } catch (error) {
-    console.error("Erro ao salvar o token e o e-mail:", error);
+    console.error('Erro ao salvar o token e o e-mail:', error);
   }
 };
 
@@ -27,7 +28,7 @@ export const getSession = async (): Promise<{
     const email = await storage.getItem(STORAGE_KEY_EMAIL);
     return { token, email };
   } catch (error) {
-    console.error("Erro ao buscar o token e o e-mail:", error);
+    console.error('Erro ao buscar o token e o e-mail:', error);
     return { token: null, email: null };
   }
 };
@@ -38,6 +39,6 @@ export const removeSession = async () => {
     await storage.removeItem(STORAGE_KEY_TOKEN);
     await storage.removeItem(STORAGE_KEY_EMAIL);
   } catch (error) {
-    console.error("Erro ao remover o token e o e-mail:", error);
+    console.error('Erro ao remover o token e o e-mail:', error);
   }
 };
