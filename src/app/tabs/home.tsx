@@ -20,6 +20,7 @@ import Loading from '@/src/components/loading';
 import { PetCard } from '@/src/components/pert-card';
 import { CarouselHome } from '@/src/components/carousel';
 import { CategoryButton } from '@/src/components/category';
+import { AddPetButton } from '@/src/components/add-pet-button';
 
 const Home = () => {
   const navigation = useNavigation<any>();
@@ -105,16 +106,7 @@ const Home = () => {
           </View>
 
           {/* Button add PET */}
-          <View className='px-8 items-center mt-10'>
-            <TouchableOpacity
-              className='bg-[#697F89] p-5 rounded-full w-full'
-              onPress={() => {}}
-            >
-              <Text className='text-white font-bold text-center text-lg'>
-                Adicionar um novo PET
-              </Text>
-            </TouchableOpacity>
-          </View>
+          <AddPetButton />
         </>
       )}
     </SafeAreaView>

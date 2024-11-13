@@ -1,6 +1,7 @@
-// * Pages
+// * Screens
 import Auth from './auth';
 import Tabs from '../tabs';
+import FormScreen from './form-add-pets';
 
 // * Nativewind
 import '../../../global.css';
@@ -47,9 +48,18 @@ const App = () => {
             headerShown: false,
           }}
         />
+
         <Stack.Screen
           name='Tabs'
           component={Tabs}
+          options={{
+            headerShown: false,
+          }}
+        />
+
+        <Stack.Screen
+          name='FormScreen'
+          component={FormScreen}
           options={{
             headerShown: false,
           }}
