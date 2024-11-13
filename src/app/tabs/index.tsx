@@ -6,7 +6,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 // * Pages
 import Home from './home';
 import FavoritesPage from './favorites';
-import { AddPetButton } from '@/src/components/add-pet-button';
 
 const Tab = createBottomTabNavigator();
 
@@ -23,7 +22,7 @@ const Tabs = () => {
               <Ionicons
                 name={icone as any}
                 size={28}
-                color={focused ? '#F7924A' : '#464646'}
+                color={focused ? '#464646' : '#FFF'}
               />
             </View>
           ),
@@ -39,7 +38,7 @@ const Tabs = () => {
         headerShown: false,
         tabBarShowLabel: false,
         tabBarStyle: {
-          backgroundColor: '#FFFFFF',
+          backgroundColor: '#F7924A',
           paddingVertical: 6,
           borderTopWidth: 0,
           elevation: 5,
@@ -52,13 +51,6 @@ const Tabs = () => {
     >
       {tab('Inicio', Home, 'home')}
       {tab('Favorites', FavoritesPage, 'heart')}
-      <Tab.Screen
-        name='AddPet'
-        component={Home} // This component won't be used, it's just a placeholder
-        options={{
-          tabBarButton: () => <AddPetButton />,
-        }}
-      />
       {tab('Chat', Home, 'chatbubble')}
       {tab('Perfil', Home, 'person')}
     </Tab.Navigator>
