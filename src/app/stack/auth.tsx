@@ -26,7 +26,6 @@ import { InputField } from "@/src/components/form/inputField";
 // * Form
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, Controller } from "react-hook-form";
-import { saveSession } from "@/src/data/helpers/storage";
 import { validationSchemaAuth } from "@/src/data/validation/schemas";
 
 // * Interface
@@ -56,14 +55,7 @@ const Auth = () => {
     try {
       if (isLogin) {
         // Login
-        const { user } = await signInWithEmailAndPassword(
-          auth,
-          data.email,
-          data.password
-        );
-        const token = await user.getIdToken();
-
-        await saveSession(token, data.email);
+        await signInWithEmailAndPassword(auth, data.email, data.password);
 
         Toast.show({
           text1: "Logado com sucesso!",

@@ -1,11 +1,13 @@
 // * React Navigation Bottom Tabs
-import { View } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { View } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 // * Pages
-import Home from './home';
-import FavoritesPage from './favorites';
+import Chat from "./chat";
+import Home from "./home";
+import Profile from "./profile";
+import FavoritesPage from "./favorites";
 
 const Tab = createBottomTabNavigator();
 
@@ -18,11 +20,11 @@ const Tabs = () => {
         options={{
           unmountOnBlur: true,
           tabBarIcon: ({ focused }) => (
-            <View className='items-center'>
+            <View className="items-center">
               <Ionicons
                 name={icone as any}
                 size={28}
-                color={focused ? '#464646' : '#FFF'}
+                color={focused ? "#464646" : "#FFF"}
               />
             </View>
           ),
@@ -33,26 +35,26 @@ const Tabs = () => {
 
   return (
     <Tab.Navigator
-      initialRouteName='Inicio'
+      initialRouteName="Inicio"
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
         tabBarStyle: {
-          backgroundColor: '#F7924A',
+          backgroundColor: "#F7924A",
           paddingVertical: 6,
           borderTopWidth: 0,
           elevation: 5,
-          shadowColor: '#000',
+          shadowColor: "#000",
           shadowOffset: { width: 0, height: -2 },
           shadowOpacity: 0.8,
           shadowRadius: 4,
         },
       }}
     >
-      {tab('Inicio', Home, 'home')}
-      {tab('Favorites', FavoritesPage, 'heart')}
-      {tab('Chat', Home, 'chatbubble')}
-      {tab('Perfil', Home, 'person')}
+      {tab("Inicio", Home, "home")}
+      {tab("Favorites", FavoritesPage, "heart")}
+      {tab("Chat", Chat, "chatbubble")}
+      {tab("Perfil", Profile, "person")}
     </Tab.Navigator>
   );
 };
