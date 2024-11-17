@@ -16,7 +16,7 @@ export const PetListItem = ({ pet }: PetListItemProps) => {
   return (
     <View
       testID="pet-card"
-      className="bg-white border-[0.5px] border-gray-300 border-1 px-2 pb-4 pt-2 rounded-2xl shadow-lg w-[170px]"
+      className="bg-white border-[0.5px] border-gray-300 border-1 px-2 mx-3 pb-4 pt-2 rounded-2xl shadow-lg w-[170px]"
     >
       <Image
         source={{ uri: pet?.imageUrl }}

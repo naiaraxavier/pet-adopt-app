@@ -2,7 +2,7 @@
 
 // * React Native
 import React, { useState, useEffect } from "react";
-import { View, Text, SafeAreaView } from "react-native";
+import { View, Text, SafeAreaView, FlatList } from "react-native";
 
 // * Data
 import { db } from "@/firebase.config";
@@ -65,11 +65,12 @@ const FavoritesPage = () => {
       <View className="p-4 mt-10">
         <Text className="text-2xl font-bold mb-5">Meus Favoritos</Text>
         {favoritePets.length > 0 ? (
-          favoritePets.map((pet) => (
-            <View key={pet.id} className="mb-4 flex">
-              <PetListItem pet={pet} />
-            </View>
-          ))
+          <FlatList
+            data={favoritePets}
+            numColumns={2}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => <PetListItem pet={item} />}
+          />
         ) : (
           <Text className="text-center text-gray-500">
             Você ainda não tem pets favoritos.

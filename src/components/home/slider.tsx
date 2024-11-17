@@ -28,7 +28,7 @@ export const Slider = () => {
           <View className="w-[90vw] mr-3 ">
             <Image
               source={{ uri: item?.imageUrl }}
-              className="h-[170px] rounded-xl"
+              className="h-[180px] rounded-xl"
             />
           </View>
         )}

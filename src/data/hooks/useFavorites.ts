@@ -5,8 +5,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export const useFavorites = () => {
   const [favorites, setFavorites] = useState<string[]>([]);
 
-  console.log(favorites);
-
   useEffect(() => {
     loadFavorites();
   }, []);

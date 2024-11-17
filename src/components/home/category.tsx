@@ -25,7 +25,7 @@ export const Category = ({ category }: CategoryProps) => {
 
   return (
     <View className="mt-5">
-      <Text className="text-xl font-semibold">Categorias</Text>
+      <Text className="text-xl py-4 font-semibold">Categorias</Text>
       <FlatList
         data={categories}
         numColumns={4}
