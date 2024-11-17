@@ -12,7 +12,18 @@
     "lint": "expo lint"
   },
   "jest": {
-    "verbose": true
+    "preset": "jest-expo",
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "**/*.{ts,tsx}",
+      "!**/coverage/**",
+      "!**/node_modules/**",
+      "!**/babel.config.js",
+      "!**/jest.setup.js"
+    ],
+    "setupFilesAfterEnv": [
+      "@testing-library/jest-native/extend-expect"
+    ]
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.2",
@@ -54,6 +65,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
+    "@testing-library/jest-native": "^5.4.3",
     "@testing-library/react-native": "^12.8.1",
     "@types/jest": "^29.5.12",
     "@types/react": "~18.2.45",
