@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
 // * React Native
-import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, SafeAreaView } from 'react-native';
+import React, { useState, useEffect } from "react";
+import { View, Text, FlatList, SafeAreaView } from "react-native";
 
 // * Data
-import pets from '@/src/data/pets-data/pets/pets.json';
+import pets from "@/src/data/pets-data/pets/pets.json";
 
 // * Components
-import { PetCard } from '@/src/components/pert-card';
-import { useFavorites } from '@/src/data/hooks/useFavorites';
+import { useFavorites } from "@/src/data/hooks/useFavorites";
+import { PetListItem } from "@/src/components/home/pet-list-item";
 
 // * Interfaces
 interface IFavorites {
@@ -38,20 +38,20 @@ const FavoritesPage = () => {
   }, [favorites]);
 
   return (
-    <SafeAreaView className='flex-1 bg-gray-100'>
-      <View className='p-4 mt-10'>
-        <Text className='text-2xl font-bold mb-5'>Meus Favoritos</Text>
+    <SafeAreaView className="flex-1 bg-gray-100">
+      <View className="p-4 mt-10">
+        <Text className="text-2xl font-bold mb-5">Meus Favoritos</Text>
         {favoritePets.length > 0 ? (
           <FlatList
             data={favoritePets}
-            renderItem={({ item }) => <PetCard {...item} />}
+            renderItem={({ item }) => <PetListItem pet={item} />}
             keyExtractor={(item) => item.id.toString()}
             numColumns={2}
-            columnWrapperStyle={{ justifyContent: 'space-between' }}
-            className='w-full'
+            columnWrapperStyle={{ justifyContent: "space-between" }}
+            className="w-full"
           />
         ) : (
-          <Text className='text-center text-gray-500'>
+          <Text className="text-center text-gray-500">
             Você ainda não tem pets favoritos.
           </Text>
         )}

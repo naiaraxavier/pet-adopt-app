@@ -3,7 +3,11 @@ import { useEffect, useState } from "react";
 import { collection, getDocs } from "@firebase/firestore";
 import { View, Text, FlatList, Image, TouchableOpacity } from "react-native";
 
-export const Category = () => {
+interface CategoryProps {
+  category: (value: string) => void;
+}
+
+export const Category = ({ category }: CategoryProps) => {
   const [categories, setCategories] = useState<any[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("Cats");
 
@@ -27,7 +31,10 @@ export const Category = () => {
         numColumns={4}
         renderItem={({ item }) => (
           <TouchableOpacity
-            onPress={() => setSelectedCategory(item?.name)}
+            onPress={() => {
+              setSelectedCategory(item?.name);
+              category(item?.name);
+            }}
             className="flex-1"
           >
             <View
