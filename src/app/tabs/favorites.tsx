@@ -19,11 +19,12 @@ interface IFavorites {
   sex: string;
   name: string;
   weight: string;
-  status: boolean;
+  status: string;
   imageUrl: string;
   category: string;
   location: string;
   description: string;
+  user?: [name: string, email: string, imageUrl: string];
 }
 
 const FavoritesPage = () => {
