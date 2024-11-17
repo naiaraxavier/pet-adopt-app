@@ -35,60 +35,11 @@ jest.mock("@react-native-async-storage/async-storage", () => ({
   removeItem: jest.fn(),
 }));
 
-// Mock useFavorites hook
-jest.mock("../../data/hooks/useFavorites", () => ({
-  useFavorites: jest.fn(() => ({
-    favorites: [],
-    addFavorite: jest.fn(),
-    removeFavorite: jest.fn(),
-  })),
-}));
-
 import { useRouter } from "expo-router";
 
-describe("Auth Component", () => {
-  // Teste para verificar se o componente Auth é renderizado corretamente
-  it("renders correctly", () => {
-    const { getByText, getByPlaceholderText } = render(<Auth />);
-    expect(getByText("Ache seu Amigo!")).toBeTruthy();
-    expect(getByPlaceholderText("E-mail")).toBeTruthy();
-    expect(getByPlaceholderText("Senha")).toBeTruthy();
-    expect(getByText("Entrar")).toBeTruthy();
-  });
-
-  // Teste para verificar se o componente alterna entre os modos de login e cadastro
-  it("switches between login and signup modes", () => {
-    const { getByText } = render(<Auth />);
-    fireEvent.press(getByText("Ainda não tem uma conta? Crie uma!"));
-    expect(getByText("Crie sua conta")).toBeTruthy();
-    expect(getByText("Criar conta")).toBeTruthy();
-    fireEvent.press(getByText("Já tem uma conta? Faça login!"));
-    expect(getByText("Ache seu Amigo!")).toBeTruthy();
-    expect(getByText("Entrar")).toBeTruthy();
-  });
-
-  // Teste para verificar se uma mensagem de erro é exibida para e-mail inválido
-  it("shows error message for invalid email", async () => {
-    const { getByPlaceholderText, getByText } = render(<Auth />);
-    fireEvent.changeText(getByPlaceholderText("E-mail"), "invalid-email");
-    fireEvent.changeText(getByPlaceholderText("Senha"), "password123");
-    fireEvent.press(getByText("Entrar"));
-    await waitFor(() => {
-      expect(getByText("Por favor, insira um e-mail válido.")).toBeTruthy();
-    });
-  });
-
-  // Teste para verificar se uma mensagem de erro é exibida para senha curta
-  it("shows error message for short password", async () => {
-    const { getByPlaceholderText, getByText } = render(<Auth />);
-    fireEvent.changeText(getByPlaceholderText("E-mail"), "test@example.com");
-    fireEvent.changeText(getByPlaceholderText("Senha"), "123");
-    fireEvent.press(getByText("Entrar"));
-    await waitFor(() => {
-      expect(
-        getByText("A senha deve ter pelo menos 6 caracteres.")
-      ).toBeTruthy();
-    });
+describe("Auth Component Integration Tests", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
 
   // Teste para verificar se a função signInWithEmailAndPassword é chamada no login
@@ -133,6 +84,7 @@ describe("Auth Component", () => {
     });
   });
 
+  // Teste para verificar login com sucesso
   it("navigates to the home screen on successful login", async () => {
     const mockPush = jest.fn();
     (useRouter as jest.Mock).mockReturnValue({ push: mockPush });

@@ -21,3 +21,6 @@ expo-env.d.ts
 
 # Firebase
 firebase.config.ts
+
+# Jest coverage
+coverage/
