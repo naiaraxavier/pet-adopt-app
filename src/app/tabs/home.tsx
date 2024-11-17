@@ -21,6 +21,9 @@ import { PetCard } from "@/src/components/pert-card";
 import { CarouselHome } from "@/src/components/carousel";
 import { CategoryButton } from "@/src/components/category";
 import { AddPetButton } from "@/src/components/add-pet-button";
+import { Header } from "@/src/components/home/header";
+import { Slider } from "@/src/components/home/slider";
+import { PetListByCategory } from "@/src/components/home/pet-list-by-category";
 
 const Home = () => {
   const auth = FIREBASE_AUTH;
@@ -40,22 +43,33 @@ const Home = () => {
   }, [auth]);
 
   return (
-    <SafeAreaView className="flex-1 bg-white w-full">
+    <View className="flex-1 bg-white w-full">
       {loading ? (
         <Loading />
       ) : (
         <>
+          {/* Header */}
+          <View className="p-5 mt-5">
+            <Header />
+
+            {/* Slider */}
+            <Slider />
+
+            {/* Categories */}
+            <PetListByCategory />
+          </View>
+
           {/* Greeting and Banner */}
-          <View className="bg-[#f6d6c0ee] pb-7 shadow">
+          {/* <View className="bg-[#f6d6c0ee] pb-7 shadow">
             <Text className="font-bold mb-3 mt-12 pl-4">Olá, {userEmail}!</Text>
 
             <View className="h-[240px] w-full">
               <CarouselHome />
             </View>
-          </View>
+          </View> */}
 
           {/* Categories */}
-          <View className="px-5">
+          {/* <View className="px-5">
             <View className="flex-row justify-between items-center">
               <Text className="font-bold mb-6 mt-6">Categorias</Text>
 
@@ -76,10 +90,10 @@ const Home = () => {
                 ))}
               </View>
             </ScrollView>
-          </View>
+          </View> */}
 
           {/* Close to you */}
-          <View className="px-5">
+          {/* <View className="px-5">
             <View className="flex-row justify-between items-center">
               <Text className="font-bold mb-6 mt-6">Próximos a você</Text>
 
@@ -103,13 +117,13 @@ const Home = () => {
                 ))}
               </View>
             </ScrollView>
-          </View>
+          </View> */}
 
           {/* Button add PET */}
-          <AddPetButton />
+          {/* <AddPetButton /> */}
         </>
       )}
-    </SafeAreaView>
+    </View>
   );
 };
 

@@ -24,3 +24,6 @@ firebase.config.ts
 
 # Jest coverage
 coverage/
+
+# Environment variables
+.env
