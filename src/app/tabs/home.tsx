@@ -24,6 +24,7 @@ import { AddPetButton } from "@/src/components/add-pet-button";
 import { Header } from "@/src/components/home/header";
 import { Slider } from "@/src/components/home/slider";
 import { PetListByCategory } from "@/src/components/home/pet-list-by-category";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Home = () => {
   const auth = FIREBASE_AUTH;
@@ -38,6 +39,15 @@ const Home = () => {
     const subscriber = auth.onAuthStateChanged((user) => {
       setUserEmail(user && user.email ? user.email : "Usuário");
     });
+    // const removeValue = async () => {
+    //   try {
+    //     await AsyncStorage.removeItem("favorites");
+    //   } catch (e) {
+    //     console.error(e);
+    //   }
+    // };
+    // removeValue();
+
     setLoading(false);
     return subscriber;
   }, [auth]);

@@ -9,10 +9,8 @@ interface PetListItemProps {
 export const PetListItem = ({ pet }: PetListItemProps) => {
   const { isFavorite, toggleFavorite } = useFavorites();
 
-  console.log(pet);
-
   const handleFavoritePress = async () => {
-    toggleFavorite(pet?.id);
+    toggleFavorite(pet?.id.toString());
   };
 
   return (

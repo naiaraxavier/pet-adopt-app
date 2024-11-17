@@ -1,9 +1,11 @@
 // * React Native
-import { useState, useEffect } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useState, useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const useFavorites = () => {
   const [favorites, setFavorites] = useState<string[]>([]);
+
+  console.log(favorites);
 
   useEffect(() => {
     loadFavorites();
@@ -11,12 +13,12 @@ export const useFavorites = () => {
 
   const loadFavorites = async () => {
     try {
-      const storedFavorites = await AsyncStorage.getItem('favorites');
+      const storedFavorites = await AsyncStorage.getItem("favorites");
       if (storedFavorites) {
         setFavorites(JSON.parse(storedFavorites));
       }
     } catch (error) {
-      console.error('Error loading favorites:', error);
+      console.error("Error loading favorites:", error);
     }
   };
 
@@ -26,10 +28,10 @@ export const useFavorites = () => {
         ? favorites.filter((favId) => favId !== id)
         : [...favorites, id];
 
-      await AsyncStorage.setItem('favorites', JSON.stringify(newFavorites));
+      await AsyncStorage.setItem("favorites", JSON.stringify(newFavorites));
       setFavorites(newFavorites);
     } catch (error) {
-      console.error('Error toggling favorite:', error);
+      console.error("Error toggling favorite:", error);
     }
   };
 
