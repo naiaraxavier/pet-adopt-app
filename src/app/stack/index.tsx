@@ -19,7 +19,7 @@ import { FIREBASE_AUTH } from "@/firebase.config";
 // * React Navigation Stack
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer, DarkTheme } from "@react-navigation/native";
-import { PetDetails } from "./pet-details";
+import { PetDetails } from "../stack/pet-details";
 
 const Stack = createNativeStackNavigator();
 
