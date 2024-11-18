@@ -1,29 +1,30 @@
-'use client';
+"use client";
 
 // * React Native
-import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, SafeAreaView } from 'react-native';
+import React, { useState, useEffect } from "react";
+import { View, Text, SafeAreaView, FlatList } from "react-native";
 
 // * Data
-import pets from '@/src/data/pets-data/pets/pets.json';
+import { db } from "@/firebase.config";
+import { collection, getDocs } from "@firebase/firestore";
 
 // * Components
-import { PetCard } from '@/src/components/pert-card';
-import { useFavorites } from '@/src/data/hooks/useFavorites';
+import { useFavorites } from "@/src/data/hooks/useFavorites";
+import { PetListItem } from "@/src/components/home/pet-list-item";
 
 // * Interfaces
 interface IFavorites {
-  id: number;
+  id: string;
   age: number;
   sex: string;
   name: string;
-  image: string;
   weight: string;
-  isLost: boolean;
+  status: string;
+  imageUrl: string;
   category: string;
   location: string;
   description: string;
-  isAdoption: boolean;
+  user?: [name: string, email: string, imageUrl: string];
 }
 
 const FavoritesPage = () => {
@@ -31,27 +32,48 @@ const FavoritesPage = () => {
   const { favorites } = useFavorites();
 
   useEffect(() => {
-    const favoritePetsData = pets.filter((pet) =>
-      favorites.includes(pet.id.toString())
-    );
-    setFavoritePets(favoritePetsData);
+    const getPets = async () => {
+      try {
+        const snapshot = await getDocs(collection(db, "Pets"));
+        const petsList = snapshot.docs.map((doc) => {
+          const data = doc.data();
+          return {
+            id: doc.id,
+            age: data.age,
+            sex: data.sex,
+            breed: data.breed,
+            name: data.name,
+            imageUrl: data.imageUrl,
+            weight: data.weight,
+            status: data.status,
+            category: data.category,
+            location: data.location,
+            description: data.description,
+          };
+        });
+
+        setFavoritePets(petsList.filter((pet) => favorites.includes(pet.id)));
+      } catch (error) {
+        console.error("Erro ao buscar pets:", error);
+      }
+    };
+
+    getPets();
   }, [favorites]);
 
   return (
-    <SafeAreaView className='flex-1 bg-gray-100'>
-      <View className='p-4 mt-10'>
-        <Text className='text-2xl font-bold mb-5'>Meus Favoritos</Text>
+    <SafeAreaView className="flex-1 bg-gray-100">
+      <View className="p-4 mt-10">
+        <Text className="text-2xl font-bold mb-5">Meus Favoritos</Text>
         {favoritePets.length > 0 ? (
           <FlatList
             data={favoritePets}
-            renderItem={({ item }) => <PetCard {...item} />}
-            keyExtractor={(item) => item.id.toString()}
             numColumns={2}
-            columnWrapperStyle={{ justifyContent: 'space-between' }}
-            className='w-full'
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => <PetListItem pet={item} />}
           />
         ) : (
-          <Text className='text-center text-gray-500'>
+          <Text className="text-center text-gray-500">
             Você ainda não tem pets favoritos.
           </Text>
         )}
