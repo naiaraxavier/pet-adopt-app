@@ -23,7 +23,7 @@ export const PetListItem = ({ pet }: PetListItemProps) => {
   const { isFavorite, toggleFavorite } = useFavorites();
   const navigation = useNavigation<any>();
 
-  const handleFavoritePress = async () => {
+  const handleFavoritePress = () => {
     toggleFavorite(pet?.id.toString());
   };
 

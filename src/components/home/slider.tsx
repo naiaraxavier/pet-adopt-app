@@ -9,11 +9,9 @@ export const Slider = () => {
   const [sliderList, setSliderList] = useState<DocumentData[]>([]);
 
   const getSliders = async () => {
-    setSliderList([]);
     const snapshot = await getDocs(collection(db, "Sliders"));
-    snapshot.forEach((doc) => {
-      setSliderList((sliderList) => [...sliderList, doc.data()]);
-    });
+    const sliders = snapshot.docs.map((doc) => doc.data());
+    setSliderList(sliders);
   };
 
   useEffect(() => {
@@ -21,18 +19,32 @@ export const Slider = () => {
   }, []);
 
   useEffect(() => {
+    if (sliderList.length === 0) return;
+
     const interval = setInterval(() => {
       const nextIndex = (currentIndex + 1) % sliderList.length;
       setCurrentIndex(nextIndex);
-
-      flatListRef.current?.scrollToIndex({
-        index: nextIndex,
-        animated: true,
-      });
     }, 3000);
 
     return () => clearInterval(interval);
   }, [currentIndex, sliderList.length]);
+  useEffect(() => {
+    if (sliderList.length > 0 && flatListRef.current) {
+      flatListRef.current.scrollToIndex({
+        index: currentIndex,
+        animated: true,
+      });
+    }
+  }, [currentIndex, sliderList.length]);
+
+  const renderItem = ({ item }: { item: DocumentData }) => (
+    <View className="w-[90vw] mr-3">
+      <Image
+        source={{ uri: item?.imageUrl }}
+        className="h-[180px] rounded-xl"
+      />
+    </View>
+  );
 
   return (
     <View className="mt-4">
@@ -41,15 +53,16 @@ export const Slider = () => {
         data={sliderList}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
-        renderItem={({ item }) => (
-          <View className="w-[90vw] mr-3 ">
-            <Image
-              source={{ uri: item?.imageUrl }}
-              className="h-[180px] rounded-xl"
-            />
-          </View>
-        )}
+        renderItem={renderItem}
         keyExtractor={(item, index) => index.toString()}
+        onContentSizeChange={() => {
+          if (sliderList.length > 0 && flatListRef.current) {
+            flatListRef.current.scrollToIndex({
+              index: currentIndex,
+              animated: true,
+            });
+          }
+        }}
       />
     </View>
   );

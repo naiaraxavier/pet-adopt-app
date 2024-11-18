@@ -1,7 +1,10 @@
-import { View, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useRoute, useNavigation } from "@react-navigation/native";
+import { About } from "@/src/components/pet-details/about";
 import PetInfo from "@/src/components/pet-details/pet-info";
+import { View, TouchableOpacity, Text } from "react-native";
+import OwnerInfo from "@/src/components/pet-details/owner-info";
+import { useRoute, useNavigation } from "@react-navigation/native";
+import { PetSubInfo } from "@/src/components/pet-details/pet-sub-info";
 
 export const PetDetails = () => {
   const route = useRoute<any>();
@@ -22,13 +25,23 @@ export const PetDetails = () => {
         <PetInfo pet={pet} />
 
         {/* Pet Properties */}
+        <PetSubInfo pet={pet} />
 
         {/* Pet Description */}
+        <About pet={pet} />
 
         {/* Pet Owner */}
-
-        {/* Adopt Button */}
+        <OwnerInfo pet={pet} />
       </View>
+
+      {/* Adopt Button */}
+      <TouchableOpacity className="absolute bottom-6 w-full">
+        <View className=" bg-[#F7924A] p-5 rounded-full items-center justify-center mx-5">
+          <Text className=" text-lg font-semibold">
+            {pet?.status === "Perdido" ? "Encontrar" : "Adotar"} {pet?.name}
+          </Text>
+        </View>
+      </TouchableOpacity>
     </View>
   );
 };
