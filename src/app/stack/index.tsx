@@ -20,58 +20,56 @@ import { FIREBASE_AUTH } from "@/firebase.config";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer, DarkTheme } from "@react-navigation/native";
 import { PetDetails } from "../stack/pet-details";
+import { User } from "firebase/auth";
 
 const Stack = createNativeStackNavigator();
 
 const App = () => {
-  const auth = FIREBASE_AUTH;
-  const [userEmail, setUserEmail] = useState<string>("");
+  const [user, setUser] = useState<User | null>(null);
+  const [initializing, setInitializing] = useState(true);
 
   useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      setUserEmail(user && user.email ? user.email : "Usuário");
+    const unsubscribe = FIREBASE_AUTH.onAuthStateChanged((user) => {
+      setUser(user);
+      if (initializing) setInitializing(false);
     });
-  }, [auth]);
 
-  if (!userEmail) {
+    return unsubscribe;
+  }, []);
+
+  if (initializing) {
     return <Loading />;
   }
 
   return (
     <NavigationContainer theme={DarkTheme}>
-      <Stack.Navigator initialRouteName={userEmail ? "Tabs" : "Auth"}>
-        <Stack.Screen
-          name="Auth"
-          component={Auth}
-          options={{
-            headerShown: false,
-          }}
-        />
-
-        <Stack.Screen
-          name="Tabs"
-          component={Tabs}
-          options={{
-            headerShown: false,
-          }}
-        />
-
-        <Stack.Screen
-          name="FormScreen"
-          component={FormScreen}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="PetDetails"
-          component={PetDetails}
-          options={{
-            headerShown: false,
-          }}
-        />
+      <Stack.Navigator>
+        {user ? (
+          <>
+            <Stack.Screen
+              name="Tabs"
+              component={Tabs}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="FormScreen"
+              component={FormScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="PetDetails"
+              component={PetDetails}
+              options={{ headerShown: false }}
+            />
+          </>
+        ) : (
+          <Stack.Screen
+            name="Auth"
+            component={Auth}
+            options={{ headerShown: false }}
+          />
+        )}
       </Stack.Navigator>
-
       <Toast />
     </NavigationContainer>
   );

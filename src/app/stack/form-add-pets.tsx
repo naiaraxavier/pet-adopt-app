@@ -2,13 +2,13 @@
 import {
   View,
   Text,
-  TextInput,
-  TouchableOpacity,
-  ScrollView,
-  KeyboardAvoidingView,
-  Platform,
   Image,
+  Platform,
   Pressable,
+  TextInput,
+  ScrollView,
+  TouchableOpacity,
+  KeyboardAvoidingView,
 } from "react-native";
 import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
@@ -17,12 +17,11 @@ import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 
 // * Components and Helpers
+import { db } from "@/firebase.config";
 import Toast from "react-native-toast-message";
+import * as ImagePicker from "expo-image-picker";
 import { Picker } from "@react-native-picker/picker";
 import { addDoc, collection, getDocs } from "@firebase/firestore";
-import { db } from "@/firebase.config";
-// import { copyFileToDevice } from '@/src/data/helpers/saveData';
-import * as ImagePicker from "expo-image-picker";
 
 interface PetFormData {
   age: number;
@@ -273,12 +272,12 @@ const FormScreen = () => {
             "Digite a localização"
           )}
 
-          {renderInput(
+          {/* {renderInput(
             "URL da Imagem",
             formData.imageUrl,
             (text) => setFormData({ ...formData, imageUrl: text }),
             "Cole a URL da imagem"
-          )}
+          )} */}
 
           {renderInput(
             "Raça",

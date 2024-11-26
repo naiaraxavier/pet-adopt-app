@@ -87,7 +87,7 @@ const Auth = () => {
   return (
     <SafeAreaView className="h-screen">
       <View className="flex-1 items-center bg-white">
-        <View className="bg-[#FBD2B6] w-full h-80 justify-center items-center overflow-hidden">
+        <View className="bg-[#FBD2B6] w-full h-[450px] justify-center items-center overflow-hidden">
           <Image
             source={require("../../../assets/images/login.png")}
             resizeMode="contain"

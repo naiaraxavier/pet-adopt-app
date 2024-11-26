@@ -33,7 +33,7 @@ const Profile = () => {
     try {
       await auth.signOut();
       Toast.show({
-        text1: "Logged out successfully!",
+        text1: "Saída realizada com sucesso.",
         type: "success",
       });
       navigation.navigate("Auth");
@@ -47,7 +47,7 @@ const Profile = () => {
     }
   };
 
-  if (!user) {
+  if (loading) {
     return <Loading />;
   }
 
@@ -55,22 +55,16 @@ const Profile = () => {
     <SafeAreaView className="flex-1 w-full">
       <View className="bg-[#FBD2B6] flex-1 justify-center items-center px-6 pt-3">
         <Text className="text-2xl font-bold text-[#464646] text-center">
-          {user.email}
+          {user?.email}
         </Text>
 
-        {loading ? (
-          <Loading />
-        ) : (
-          <TouchableOpacity
-            className="bg-[#F7924A] rounded-full w-[245px] h-[50px] p-2 mt-4 flex justify-center items-center"
-            onPress={handleLogout}
-            disabled={loading}
-          >
-            <Text className="text-white font-bold text-center text-lg">
-              Sair
-            </Text>
-          </TouchableOpacity>
-        )}
+        <TouchableOpacity
+          className="bg-[#F7924A] rounded-full w-[245px] h-[50px] p-2 mt-4 flex justify-center items-center"
+          onPress={handleLogout}
+          disabled={loading}
+        >
+          <Text className="text-white font-bold text-center text-lg">Sair</Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
