@@ -2,6 +2,8 @@
 
 Este é um projeto em **React Native** voltado para ajudar pessoas a encontrar animais perdidos ou adotar novos amigos. A aplicação permite que usuários registrem animais perdidos, encontrem animais para adoção, e interajam com outros usuários interessados em ajudar.
 
+<img src="assets/images/home.png" alt="Descrição da imagem" width="250" />
+
 ## 📋 Funcionalidades
 
 - **Cadastro de Animais Perdidos**: Adicione informações sobre o animal perdido, como foto, localização, e descrição.
