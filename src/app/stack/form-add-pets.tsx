@@ -63,8 +63,6 @@ const FormScreen = () => {
     },
   });
 
-  console.log(formData);
-
   const GetCategories = async () => {
     setCategories([]);
     const snapshot = await getDocs(collection(db, "Category"));
