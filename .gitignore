@@ -18,3 +18,12 @@ web-build/
 
 expo-env.d.ts
 # @end expo-cli
+
+# Firebase
+firebase.config.ts
+
+# Jest coverage
+coverage/
+
+# Environment variables
+.env

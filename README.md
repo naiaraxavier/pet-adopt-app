@@ -1,51 +1,80 @@
-# Welcome to your Expo app 👋
+# 🐾 App para Adoção e Animais Perdidos
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Este é um projeto em **React Native** voltado para ajudar pessoas a encontrar animais perdidos ou adotar novos amigos. A aplicação permite que usuários registrem animais perdidos, encontrem animais para adoção, e interajam com outros usuários interessados em ajudar.
 
-## Get started
+## 📋 Funcionalidades
 
-1. Install dependencies
+- **Cadastro de Animais Perdidos**: Adicione informações sobre o animal perdido, como foto, localização, e descrição.
+- **Busca por Animais Perdidos**: Encontre animais desaparecidos por filtros de localização e descrição.
+- **Adoção**: Visualize animais disponíveis para adoção, com detalhes e fotos.
 
-   ```bash
-   npm install
-   ```
+## 🚀 Tecnologias Utilizadas
 
-2. Start the app
+- [React Native](https://reactnative.dev/) - Framework para desenvolvimento mobile
+- [Expo](https://expo.dev/) - Plataforma para desenvolvimento, construção e deploy de apps em React Native
+- [React Navigation](https://reactnavigation.org/) - Navegação entre telas
+- [Firebase](https://firebase.google.com/) - Autenticação e banco de dados em tempo real
+- [Axios](https://axios-http.com/) - Para requisições HTTP
+- [NativeWind](https://www.nativewind.dev/) - Biblioteca para estilização de componentes usando classes de utilitários semelhantes ao Tailwind CSS
 
-   ```bash
-    npx expo start
-   ```
+## ⚙️ Pré-requisitos
 
-In the output, you'll find options to open the app in a
+Antes de começar, você precisará ter instalado em sua máquina as seguintes ferramentas:
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- [Node.js](https://nodejs.org/en/)
+- [Expo CLI](https://docs.expo.dev/get-started/installation/)
+- Um emulador iOS ou Android ou um dispositivo físico com o [Expo Go](https://expo.dev/client) instalado
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+Além disso, é recomendável ter um editor para trabalhar com o código, como o [Visual Studio Code](https://code.visualstudio.com/).
 
-## Get a fresh project
+## 📦 Instalação
 
-When you're ready, run:
+1. **Clone o repositório**
 
 ```bash
-npm run reset-project
+  git clone git@github.com:naiaraxavier/pet-adopt-app.git
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+2. **Navegue até o diretório do projeto**
 
-## Learn more
+```bash
+  cd pet-adopt-app
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+3. **Instale as dependências**
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```bash
+  npm install
+```
 
-## Join the community
+4. **Configure o Firebase**
 
-Join our community of developers creating universal apps.
+Crie um projeto no Firebase e obtenha as credenciais. Depois, crie um arquivo .env na raiz do projeto e configure as variáveis do Firebase:
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
-# pet-adopt-app
+```plaintext
+FIREBASE_APP_ID=your-app-id
+FIREBASE_API_KEY=your-api-key
+FIREBASE_PROJECT_ID=your-project-id
+FIREBASE_AUTH_DOMAIN=your-auth-domain
+FIREBASE_STORAGE_BUCKET=your-storage-bucket
+FIREBASE_MESSAGING_SENDER_ID=your-messaging-sender-id
+```
+
+## 🏃 Executando o Projeto
+
+1. **Inicie o servidor**
+
+```bash
+  npx expo start
+```
+
+2. **Inicie o servidor**
+
+- Escaneie o QR code com o aplicativo Expo Go no seu dispositivo físico, ou
+- Escolha rodar em um emulador iOS ou Android no menu que será exibido.
+
+## 🚧 Melhorias Futuras
+
+- Implementar sistema de mensagens entre usuários
+- Notificações push para novos alertas de animais perdidos
+- Opção de doação para ajuda em cuidados com os animais
